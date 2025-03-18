@@ -1,5 +1,5 @@
-# SPACE-SHOOTER-GAME:
-Developed a 2D Space Shooter game where players navigate a spacecraft to survive in space while destroying incoming asteroids. Built using Python and Pygame.
+# ASTEROID-SHOOTER-GAME:
+Developed a 2D Asteroid Shooter game where players navigate a spacecraft to survive in space while destroying incoming asteroids. Built using Python and Pygame.
 # GAMEPLAY:
 
 - **Objective**: Destroy as many asteroids as possible to score points while avoiding collisions.
