@@ -18,6 +18,7 @@ explosion_sound = pygame.mixer.Sound('Explosion - Sound Effect.mp3')
 font = pygame.font.SysFont(None, 36)
 game_over_font = pygame.font.SysFont(None, 72)
 pygame.mixer.music.play(-1)  
+
 class Spaceship(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -26,6 +27,7 @@ class Spaceship(pygame.sprite.Sprite):
         self.rect.x = WIDTH // 2 - self.rect.width // 2
         self.rect.y = HEIGHT - 60
         self.speed_x = 5
+    
     def update(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
@@ -33,11 +35,13 @@ class Spaceship(pygame.sprite.Sprite):
         if keys[pygame.K_RIGHT]:
             self.rect.x += self.speed_x
         self.rect.x = max(0, min(self.rect.x, WIDTH - self.rect.width))
+    
     def shoot(self):
         bullet = Bullet(self.rect.centerx, self.rect.top)
         all_sprites.add(bullet)
         bullets.add(bullet)
         bullet_sound.play()
+
 class Asteroid(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -46,11 +50,13 @@ class Asteroid(pygame.sprite.Sprite):
         self.rect.x = random.randint(0, WIDTH - self.rect.width)
         self.rect.y = random.randint(-100, -40)
         self.speed_y = random.randint(2, 6)
+    
     def update(self):
         self.rect.y += self.speed_y
         if self.rect.top > HEIGHT:
             self.rect.y = random.randint(-100, -40)
             self.rect.x = random.randint(0, WIDTH - self.rect.width)
+
 class Bullet(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
@@ -65,11 +71,13 @@ class Bullet(pygame.sprite.Sprite):
         self.rect.y += self.speed_y
         if self.rect.bottom < 0:
             self.kill()
+
 all_sprites = pygame.sprite.Group()
 asteroids = pygame.sprite.Group()
 bullets = pygame.sprite.Group()
 spaceship = Spaceship()
 all_sprites.add(spaceship)
+
 for i in range(8):
     asteroid = Asteroid()
     all_sprites.add(asteroid)
@@ -78,6 +86,7 @@ clock = pygame.time.Clock()
 score = 0
 game_over = False
 running = True
+
 while running:
     clock.tick(60)  
     for event in pygame.event.get():
