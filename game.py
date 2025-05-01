@@ -13,14 +13,15 @@ spaceship_img = pygame.image.load('images/spaceship.png')
 spaceship_img = pygame.transform.scale(spaceship_img, (50, 50))
 asteroid_img = pygame.image.load('images/aesteroid.png')
 asteroid_img = pygame.transform.scale(asteroid_img, (50, 50))
-pygame.mixer.music.load('images/Space Shooter Template Music.mp3')
-bullet_sound = pygame.mixer.Sound('images/background_music.mp3')
-explosion_sound = pygame.mixer.Sound('images/Explosion - Sound Effect.mp3')
+pygame.mixer.music.load('sound/Space Shooter Template Music.mp3')
+bullet_sound = pygame.mixer.Sound('sound/background_music.mp3')
+explosion_sound = pygame.mixer.Sound('sound/Explosion - Sound Effect.mp3')
 font = pygame.font.SysFont(None, 36)
 game_over_font = pygame.font.SysFont(None, 72)
 pygame.mixer.music.play(-1)  
 
-#Setting the Spaceship
+#Defining Classes
+
 class Spaceship(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -44,7 +45,7 @@ class Spaceship(pygame.sprite.Sprite):
         bullets.add(bullet)
         bullet_sound.play()
 
-#Setting Asteroids
+
 class Asteroid(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -60,7 +61,7 @@ class Asteroid(pygame.sprite.Sprite):
             self.rect.y = random.randint(-100, -40)
             self.rect.x = random.randint(0, WIDTH - self.rect.width)
 
-#Setting Bullets
+
 class Bullet(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
@@ -76,13 +77,14 @@ class Bullet(pygame.sprite.Sprite):
         if self.rect.bottom < 0:
             self.kill()
 
-
+#Initializing Sprite Groups
 all_sprites = pygame.sprite.Group()
 asteroids = pygame.sprite.Group()
 bullets = pygame.sprite.Group()
 spaceship = Spaceship()
 all_sprites.add(spaceship)
 
+#Setting asteroids
 for i in range(8):
     asteroid = Asteroid()
     all_sprites.add(asteroid)
@@ -105,8 +107,11 @@ while running:
 
     if not game_over:
         all_sprites.update()
+    
+    #Check for collisions between bullets and asteroids
     hits = pygame.sprite.groupcollide(asteroids, bullets, True, True)
     
+    #Handling collisions between bullets and asteroids
     for hit in hits:
         score += 10
         explosion_sound.play()
@@ -114,12 +119,14 @@ while running:
         all_sprites.add(asteroid)
         asteroids.add(asteroid)
     
+    #Handling collisions between asteroids and spaceship
     if pygame.sprite.spritecollideany(spaceship, asteroids):
         explosion_sound.play()
         game_over = True
+    
     screen.fill(BLACK)
     all_sprites.draw(screen)
-    score_text = font.render(f"Score: {score}", True, WHITE)
+    score_text = font.render(f"Score: {score}", True, WHITE) #display score
     screen.blit(score_text, (10, 10))
 
     if game_over:
