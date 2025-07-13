@@ -18,4 +18,4 @@ Developed a 2D Asteroid Shooter game where players navigate a spacecraft to surv
 - **Scoring System**: Earn 10 points for every asteroid destroyed.
 - **Engaging Audio**: Includes background music, shooting sounds, and explosion effects.
 - **Game Over Screen**: Displays a "Game Over" message when the spaceship is hit.
-- **Optimized FPS**: Runs at a smooth 60 frames per second.
+
